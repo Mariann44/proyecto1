@@ -13,6 +13,7 @@ using std::getline;
 using std::string; 
 
 LinkedPriorityQueue<Usuario> usuarios(10);
+ArrayList<Area> areas;
 
 
 //Resulta que c++ toma en cuenta el orden de las funciones, por lo que si se llama una función que no ha sido declarada, se debe declarar antes de llamarla
@@ -236,6 +237,7 @@ void menuAreas() {
 
 void agregarArea(string descripcion, string codigo, int cantidadVentanillas) {
 	
+	areas.insert(Area(descripcion, codigo, cantidadVentanillas));
 	cout << "Area agregada con exito. \n";
 	menuAreas();
 
