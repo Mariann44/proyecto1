@@ -105,5 +105,13 @@ public:
 			cout << elements[i] << " ";
 		cout << "]" << endl;
 	}
+
+	void printPuntero() {
+		cout << "[ ";
+		for (int i = 0; i < size; i++)
+			cout << *elements[i] << " "; // uso del operador *
+		cout << "]" << endl;
+	}
+
 };
 

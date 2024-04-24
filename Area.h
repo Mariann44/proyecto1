@@ -29,22 +29,30 @@ public:
         }
     }
 
+    ~Area()
+    {
+        //ArrayList y LinkedPriorityQueue se eliminan automaticamente por lo que no es necesario hacerlo ¿?
+      
+    }
+
+
+    /*
     //Constructor de copia
     Area(const Area& other)
         : descripcion(other.descripcion), codigo(other.codigo), cantidadVentanillas(other.cantidadVentanillas), ventanillas(other.ventanillas), tiquetes(other.tiquetes)
     {}
 
 
-    /*
+    */
 
     //Para poder imprimir area
     friend std::ostream& operator<<(std::ostream& os, const Area& area) {
-        os << "Area: " << area.descripcion << ", " << area.codigo << ", " << area.cantidadVentanillas;
+        os << "Area: " << area.descripcion << ",  Codigo: " << area.codigo << ", Cantidad de Ventanillas: " << area.cantidadVentanillas;
         return os;
 
 
     }
-    */
+    
     
 
     

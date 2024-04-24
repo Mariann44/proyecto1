@@ -13,7 +13,7 @@ using std::getline;
 using std::string; 
 
 LinkedPriorityQueue<Usuario> usuarios(10);
-ArrayList<Area> areas;
+ArrayList<Area*> areas;
 
 
 //Resulta que c++ toma en cuenta el orden de las funciones, por lo que si se llama una función que no ha sido declarada, se debe declarar antes de llamarla
@@ -93,7 +93,7 @@ void menuAdministracion() {
 		menuTiposDeUsuario();
 	}
 	else if (opcion == "2") {
-		//Método para áreas
+		menuAreas();
 	}
 	else if (opcion == "3") {
 		//Método para servicios disponibles
@@ -192,7 +192,8 @@ void menuAreas() {
 	cout << "1. Agregar \n";
 	cout << "2. Eliminar \n";
 	cout << "3. Modificar Ventanillas \n";
-	cout << "4. Regresar: \n";
+	cout << "4. Print de areas \n";
+	cout << "5. Regresar: \n";
 	string opcion;
 	getline(cin, opcion);
 
@@ -211,6 +212,7 @@ void menuAreas() {
 		agregarArea(descripcion, codigo, stoi(cantidadVentanillas)); 
 		
 		
+		
 
 	}
 	else if (opcion == "2") {
@@ -225,6 +227,14 @@ void menuAreas() {
 
 	}
 	else if (opcion == "4") {
+		cout << "Areas Actuales y su info: \n";
+		areas.printPuntero();
+		cout << "" << endl;
+		menuAreas();
+
+
+	}
+	else if (opcion == "5") {
 		menuAdministracion();
 
 	}
@@ -236,12 +246,12 @@ void menuAreas() {
 }
 
 void agregarArea(string descripcion, string codigo, int cantidadVentanillas) {
-	
-	areas.insert(Area(descripcion, codigo, cantidadVentanillas));
+	Area* nuevaArea = new Area(descripcion, codigo, cantidadVentanillas);
+	areas.insert(nuevaArea);
 	cout << "Area agregada con exito. \n";
 	menuAreas();
-
 }
+
 
 
 
