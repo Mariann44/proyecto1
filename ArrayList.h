@@ -29,19 +29,31 @@ public:
 	}
 
 	void insert(E element) {
-		if (size == max)
-			throw runtime_error("List is full.");
+		if (size == max) 
+			expand();
 		for (int i = size; i > pos; i--) 
 			elements[i] = elements[i - 1];
 		elements[pos] = element;
 		size++;
 	}
+
 	void append(E element) {
 		if (size == max)
-			throw runtime_error("List is full.");
+			expand();
 		elements[size] = element;
 		size++;
 	}
+
+	void expand() {
+		E* newElements = new E[max * 2];
+		for (int i = 0; i < size; i++)
+			newElements[i] = elements[i];
+		delete[] elements;
+		elements = newElements;
+		max *= 2;
+	}
+
+
 	void set(E element) {
 		if (pos == size)
 			throw runtime_error("No current element.");

@@ -70,6 +70,16 @@ public:
 
     void setVentanillas(int nuevaCantidadVentanillas)
 	{
+        if(nuevaCantidadVentanillas == cantidadVentanillas){
+			return;
+		}
+        /*
+        if (nuevaCantidadVentanillas > cantidadVentanillas) {
+            cout << "llega al if" << endl;
+            agregarVentanilla(nuevaCantidadVentanillas);
+            return;
+        }
+        */
         ventanillas.clear();
         cantidadVentanillas = nuevaCantidadVentanillas;
 
@@ -80,6 +90,19 @@ public:
 		}
 		
 	}
+
+
+    void agregarVentanilla(int nuevaCantidadVentanillas) {
+        while(cantidadVentanillas < nuevaCantidadVentanillas){
+			Ventanilla ventanilla = Ventanilla(codigo, cantidadVentanillas);
+            cout <<"llega al while y crea el objeto"<<endl;
+			ventanillas.insert(ventanilla);
+			cantidadVentanillas++;
+		}
+    }
+
+
+
 
 
     //Para poder imprimir area
