@@ -9,6 +9,9 @@
 
 
 using std::string;
+using std::cout;
+using std::endl;
+
 class Area      
 {
 private:
@@ -35,6 +38,21 @@ public:
       
     }
 
+    void imprimirVentanillas(){
+        ventanillas.goToStart();
+		for (int i = 0; i < cantidadVentanillas; i++)
+		{
+            ventanillas.getElement().print();
+            cout<<endl;
+            ventanillas.next();
+
+			
+		}
+	}
+
+
+
+
 
     /*
     //Constructor de copia
@@ -44,10 +62,29 @@ public:
 
 
     */
+    //Getters y Setters
+    string getDescripcion() const
+	{
+		return descripcion;
+	}
+
+    void setVentanillas(int nuevaCantidadVentanillas)
+	{
+        ventanillas.clear();
+        cantidadVentanillas = nuevaCantidadVentanillas;
+
+        for (int i = 0; i < cantidadVentanillas; i++)
+		{
+            Ventanilla ventanilla = Ventanilla(codigo, i);
+			ventanillas.insert(ventanilla);
+		}
+		
+	}
+
 
     //Para poder imprimir area
     friend std::ostream& operator<<(std::ostream& os, const Area& area) {
-        os << "Area: " << area.descripcion << ",  Codigo: " << area.codigo << ", Cantidad de Ventanillas: " << area.cantidadVentanillas;
+        os << "Area: " << area.descripcion << ",  Codigo: " << area.codigo << ", Cantidad de Ventanillas: " << area.cantidadVentanillas << " \n";
         return os;
 
 

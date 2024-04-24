@@ -24,19 +24,8 @@ void eliminarTipoUsuario();
 void menuAdministracion();
 void menuAreas();
 void agregarArea(string descripcion, string codigo, int cantidadVentanillas);
-
-
-
-
-
-
-
-
-
-
-
-
-
+Area* buscarArea(string nombre);
+void modificarVentanillas(Area* area, int cantidadVentanillas);
 
 
 
@@ -221,7 +210,28 @@ void menuAreas() {
 
 	}
 	else if (opcion == "3") {
-		
+		cout << "Inserte el nombre del area: \n";
+		string nombreArea;
+		getline(cin, nombreArea);
+		Area* area = buscarArea(nombreArea);
+
+		if (area == nullptr) {
+			cout << "Area no encontrada. \n";
+			menuAreas();
+			return;
+		}
+		else {
+			cout << "Estas son las ventanillas de dicha area: \n";
+			area->imprimirVentanillas();
+			cout << "\n";
+			cout << "Inserte el nuevo numero de ventanillas: \n";
+			string cantidadVentanillas;
+			getline(cin, cantidadVentanillas);
+			modificarVentanillas(area, stoi(cantidadVentanillas));
+			menuAreas();
+			
+
+		}
 
 
 
@@ -252,7 +262,24 @@ void agregarArea(string descripcion, string codigo, int cantidadVentanillas) {
 	menuAreas();
 }
 
+Area* buscarArea(string nombre) {
+	areas.goToStart();
+	for (int i = 0; i < areas.getSize(); i++) {
+		if (areas.getElement()->getDescripcion() == nombre) {
+			return areas.getElement();
+		}
+		areas.next();
+		
+	}
+	return nullptr;
+}
 
+void modificarVentanillas(Area* area, int cantidadVentanillas) {
+	area->setVentanillas(cantidadVentanillas);
+	cout << "Ventanillas modificadas con exito. \n";
+	area->imprimirVentanillas();
+	cout << "\n";
+}
 
 
 

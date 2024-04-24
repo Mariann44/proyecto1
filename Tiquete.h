@@ -31,6 +31,11 @@ public:
 		prioridad = 0;
 	}
 
+	string getCodigo() const
+	{
+		return codigo;
+	}
+
 	friend std::ostream& operator<<(std::ostream& os, const Tiquete& tiquete)
 	{
 		os << "Codigo: " << tiquete.codigo << ", Prioridad: " << tiquete.prioridad;

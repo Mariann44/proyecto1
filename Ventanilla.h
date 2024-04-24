@@ -3,6 +3,8 @@
 #include "Tiquete.h"
 
 using std::string;
+using std::cout;
+using std::endl;
 class Ventanilla
 {
 private:
@@ -29,7 +31,33 @@ public:
 		tiqueteAnterior = nullptr;
 	}
 
+	~Ventanilla()
+	{
+		delete tiqueteActual;
+		delete tiqueteAnterior;
+	}
 
+	string getNombre() const
+	{
+		return nombre;
+	}
+
+	Tiquete* getTiqueteActual() const
+	{
+		return tiqueteActual;
+	}
+
+
+	void print() {
+		cout << "Ventanilla: " << nombre << ", Ocupada: " << (ocupada ? "Sí" : "No") << endl;
+		if (tiqueteActual != nullptr) {
+			cout << "Tiquete actual: " << tiqueteActual->getCodigo() << endl;
+		}
+		else {
+			cout << "Tiquete actual: No hay tiquete actual" << endl;
+		}
+
+	}
 
 	friend std::ostream& operator<<(std::ostream& os, const Ventanilla& ventanilla){
 		os << "Nombre: " << ventanilla.nombre << ", Ocupada: " << (ventanilla.ocupada ? "Sí" : "No");
