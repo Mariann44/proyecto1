@@ -50,10 +50,6 @@ public:
 		}
 	}
 
-
-
-
-
     /*
     //Constructor de copia
     Area(const Area& other)
@@ -62,11 +58,7 @@ public:
 
 
     */
-    //Getters y Setters
-    string getDescripcion() const
-	{
-		return descripcion;
-	}
+    
 
     void setVentanillas(int nuevaCantidadVentanillas)
 	{
@@ -101,9 +93,21 @@ public:
 		}
     }
 
+    void DeleteTodo (){
+		ventanillas.clear();
+		tiquetes.clear();
+	}
 
 
+    void print(){
+		cout << "Area: " << descripcion << ",  Codigo: " << codigo << ", Cantidad de Ventanillas: " << cantidadVentanillas << " \n";
+	}
 
+    //Getters y Setters
+    string getDescripcion() const
+    {
+        return descripcion;
+    }
 
     //Para poder imprimir area
     friend std::ostream& operator<<(std::ostream& os, const Area& area) {

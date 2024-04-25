@@ -17,7 +17,7 @@ ArrayList<Area*> areas;
 
 
 //Resulta que c++ toma en cuenta el orden de las funciones, por lo que si se llama una función que no ha sido declarada, se debe declarar antes de llamarla
-
+void menuPrincipal();
 void menuTiposDeUsuario();
 void agregarTipoUsuario(string nombre, int prioridad);
 void eliminarTipoUsuario();
@@ -26,6 +26,8 @@ void menuAreas();
 void agregarArea(string descripcion, string codigo, int cantidadVentanillas);
 Area* buscarArea(string nombre);
 void modificarVentanillas(Area* area, int cantidadVentanillas);
+void borrarArea(string nombre);
+void menuServiciosDisponibles();
 
 
 
@@ -85,13 +87,13 @@ void menuAdministracion() {
 		menuAreas();
 	}
 	else if (opcion == "3") {
-		//Método para servicios disponibles
+		menuServiciosDisponibles();
 	}
 	else if (opcion == "4") {
 		//Método para limpiar colas limpiece la cola
 	}
 	else if (opcion == "5") {
-		//Regresar
+		menuPrincipal();
 	}
 	else {
 		cout << "Opcion no valida. \n";
@@ -199,14 +201,39 @@ void menuAreas() {
 
 		//Agregar Validacion de opciones PENDIENTE
 		agregarArea(descripcion, codigo, stoi(cantidadVentanillas)); 
-		
-		
-		
+			
 
 	}
 	else if (opcion == "2") {
+		cout << "Inserte el nombre del area: \n";
+		string nombreArea;
+		getline(cin, nombreArea);
 		
 
+
+		if(buscarArea(nombreArea) == nullptr) {
+			cout << "Area no encontrada. \n";
+			menuAreas();
+			return;
+		}
+		else {
+			cout << "Esta es la informacion del area: \n";
+			buscarArea(nombreArea)->print();
+		}
+
+
+		cout << "Esta seguro que desea borrar el area? Coloque s para confirmar, de lo contrario no se borrará \n";
+		string confirmacion;
+		getline(cin, confirmacion);
+		if (confirmacion == "s") {
+			borrarArea(nombreArea);
+			menuAreas();
+		}
+		else {
+			cout << "Area no borrada. \n";
+			menuAreas();
+		}
+		
 
 	}
 	else if (opcion == "3") {
@@ -233,16 +260,12 @@ void menuAreas() {
 
 		}
 
-
-
 	}
 	else if (opcion == "4") {
 		cout << "Areas Actuales y su info: \n";
 		areas.printPuntero();
 		cout << "" << endl;
 		menuAreas();
-
-
 	}
 	else if (opcion == "5") {
 		menuAdministracion();
@@ -280,6 +303,49 @@ void modificarVentanillas(Area* area, int cantidadVentanillas) {
 	area->imprimirVentanillas();
 	cout << "\n";
 }
+
+void borrarArea(string nombre) {
+	areas.goToStart();
+	for (int i = 0; i < areas.getSize(); i++) {
+		if (areas.getElement()->getDescripcion() == nombre) {
+			Area* area = areas.getElement();
+			areas.remove();
+			delete area;
+			cout << "Area eliminada con exito. \n";
+			return;
+		}
+		areas.next();
+	}
+	cout << "Area no encontrada. \n";
+}
+
+void menuServiciosDisponibles() {
+	cout << "Servicios Disponibles: \n";
+	cout << "1. Agregar \n";
+	cout << "2. Eliminar \n";
+	cout << "3. Reordenar \n";
+	cout << "4. Regresar: \n";
+	string opcion;
+	getline(cin, opcion);
+
+	if (opcion == "1") {
+		
+	}
+	else if (opcion == "2") {
+		
+	}
+	else if (opcion == "3") {
+		
+	}
+	else if (opcion == "4") {
+		menuAdministracion();
+	}
+	else {
+		cout << "Opcion no valida. \n";
+	}
+}
+
+
 
 
 
