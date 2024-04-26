@@ -110,7 +110,7 @@ public:
 	}
 	int getPos() {
 		return pos;
-	}
+	} 
 	void print() {
 		cout << "[ ";
 		for (int i = 0; i < size; i++)
@@ -124,6 +124,14 @@ public:
 			cout << *elements[i] << " "; // uso del operador *
 		cout << "]" << endl;
 	}
+
+	void printPunteroConIndice() {
+		cout << "[ ";
+		for (int i = 0; i < size; i++)
+			cout << i << ". " << *elements[i] << " "; // uso del operador *
+		cout << "]" << endl;
+	} 
+
 
 };
 

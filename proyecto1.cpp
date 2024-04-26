@@ -6,14 +6,16 @@
 #include "ArrayList.h"
 #include "Usuario.h"
 #include "Area.h"
+#include "Servicio.h"
 
 using std::cout;
 using std::cin;
 using std::getline;
 using std::string; 
 
-LinkedPriorityQueue<Usuario> usuarios(10);
+LinkedPriorityQueue<Usuario> usuarios(10); //pa saber los tipos de usuario
 ArrayList<Area*> areas;
+ArrayList<Servicio*> servicios;
 
 
 //Resulta que c++ toma en cuenta el orden de las funciones, por lo que si se llama una función que no ha sido declarada, se debe declarar antes de llamarla
@@ -28,12 +30,37 @@ Area* buscarArea(string nombre);
 void modificarVentanillas(Area* area, int cantidadVentanillas);
 void borrarArea(string nombre);
 void menuServiciosDisponibles();
+void agregarServicios(string descripcion, int prioridad, string area);
+void eliminarServicios(int servicio);
+void eliminarServiciosString(string servicio);
+void reordenar(int servicio, int nuevaPosicion);
 
 
-
-
-
-
+// Gabriel: Este método convierte un string a un int, si el string no es un número, se manejan las excepciones. por eso cuando se llama para convirtir se llama como stoi(string) xd
+//Es decir, es lo mismo pero modificao shico
+int StringtoInt(string str)
+ { 
+	try {
+		int num = stoi(str);
+		return num;
+	}
+	catch (const std::invalid_argument& ia) {
+		cout << "Usted no digito un número. \n";
+		menuAdministracion();
+		
+	}
+	catch (const std::out_of_range& oor) {
+		cout << "El numero esta fuera de rango. \n";
+		menuAdministracion();
+	
+	}
+	catch (const std::exception& e) {
+		cout << "Error desconocido. \n";
+		menuAdministracion();
+		
+	}
+	
+}
 
 void menuPrincipal() {
 	cout << "Menu Principal: \n";
@@ -67,6 +94,7 @@ void menuPrincipal() {
 	}
 	else {
 		cout << "Opcion no valida. \n";
+		menuPrincipal();
 	}
 }
 
@@ -97,6 +125,7 @@ void menuAdministracion() {
 	}
 	else {
 		cout << "Opcion no valida. \n";
+		menuAdministracion();
 	}
 }
 
@@ -115,7 +144,7 @@ void menuTiposDeUsuario() {
 		cout << "Ingrese la prioridad del tipo de usuario: \n";
 		string prioridad;
 		getline(cin, prioridad);
-		agregarTipoUsuario(descripcion, stoi(prioridad)); //stoi lo convierte a int 
+		agregarTipoUsuario(descripcion, StringtoInt(prioridad));
 
 	}
 	else if (opcion == "2") {
@@ -130,8 +159,7 @@ void menuTiposDeUsuario() {
 	}
 	else {
 		cout << "Opcion no valida. \n";
-
-
+		menuTiposDeUsuario();
 	}
 }
 
@@ -164,8 +192,8 @@ void eliminarTipoUsuario() {
 			break;
 		}
 
-        if (stoi(prioridad) >= 0 && stoi(prioridad) < usuarios.getSize()) {
-            usuarios.removePriority(stoi(prioridad));
+        if (StringtoInt(prioridad) >= 0 && StringtoInt(prioridad) < usuarios.getSize()) {
+            usuarios.removePriority(StringtoInt(prioridad));
             cout << "Tipo de usuario eliminado con exito. \n";
             break;
         }
@@ -200,7 +228,7 @@ void menuAreas() {
 		getline(cin, cantidadVentanillas);
 
 		//Agregar Validacion de opciones PENDIENTE
-		agregarArea(descripcion, codigo, stoi(cantidadVentanillas)); 
+		agregarArea(descripcion, codigo, StringtoInt(cantidadVentanillas)); 
 			
 
 	}
@@ -254,7 +282,7 @@ void menuAreas() {
 			cout << "Inserte el nuevo numero de ventanillas: \n";
 			string cantidadVentanillas;
 			getline(cin, cantidadVentanillas);
-			modificarVentanillas(area, stoi(cantidadVentanillas));
+			modificarVentanillas(area, StringtoInt(cantidadVentanillas));
 			menuAreas();
 			
 
@@ -273,6 +301,7 @@ void menuAreas() {
 	}
 	else {
 		cout << "Opcion no valida. \n";
+		menuAreas();
 
 
 	}
@@ -309,6 +338,7 @@ void borrarArea(string nombre) {
 	for (int i = 0; i < areas.getSize(); i++) {
 		if (areas.getElement()->getDescripcion() == nombre) {
 			Area* area = areas.getElement();
+			eliminarServiciosString(area->getDescripcion());
 			areas.remove();
 			delete area;
 			cout << "Area eliminada con exito. \n";
@@ -320,34 +350,117 @@ void borrarArea(string nombre) {
 }
 
 void menuServiciosDisponibles() {
-	cout << "Servicios Disponibles: \n";
+	cout << "de Servicios Opciones : \n";
 	cout << "1. Agregar \n";
 	cout << "2. Eliminar \n";
 	cout << "3. Reordenar \n";
 	cout << "4. Regresar: \n";
+	cout << "5. Print de servicios \n";
 	string opcion;
 	getline(cin, opcion);
 
 	if (opcion == "1") {
+		cout << "Ingrese la descripción del servicio: \n";
+		string descripcion;
+		getline(cin, descripcion);
+		cout << "Ingrese la prioridad del servicio: \n";
+		string prioridad;
+		getline(cin, prioridad);
+		cout << "Ingrese el area del servicio: \n";
+		string area;
+		getline(cin, area);
+		agregarServicios(descripcion, StringtoInt(prioridad), area);
 		
 	}
 	else if (opcion == "2") {
-		
+		cout << "Observe los servicios disponibles a borrar:  \n";
+		servicios.printPunteroConIndice();
+		cout << "Inserte el numero del servicio que desea borrar: \n";
+		string servicio;
+		getline(cin, servicio);
+		eliminarServicios(StringtoInt(servicio));
 	}
 	else if (opcion == "3") {
-		
+		cout << "Observe los servicios disponibles a reordenar:  \n";
+		servicios.printPunteroConIndice();
+		cout << "Inserte el numero del servicio que desea reordenar: \n";
+		string servicio;
+		getline(cin, servicio);
+		cout << "Inserte la nueva posicion del servicio: \n";
+		string nuevaPosicion;
+		getline(cin, nuevaPosicion);
+		reordenar(StringtoInt(servicio), StringtoInt(nuevaPosicion));
 	}
 	else if (opcion == "4") {
 		menuAdministracion();
 	}
+	else if (opcion == "5") {
+		servicios.printPunteroConIndice();
+		menuServiciosDisponibles();
+	}
 	else {
 		cout << "Opcion no valida. \n";
+		menuServiciosDisponibles();
 	}
 }
 
 
+void agregarServicios(string descripcion, int prioridad, string area) {
+	Servicio* servicio = new Servicio(descripcion, prioridad, area);
+	servicios.insert(servicio);
+	cout << "Servicio agregado con exito. \n";
+	menuServiciosDisponibles();
+}
 
+void eliminarServicios(int servicio) {
+	servicios.goToStart();
+	for (int i = 0; i < servicios.getSize(); i++) {
+		if (i == servicio) {
+			Servicio* servicio = servicios.getElement();
+			servicios.remove();
+			delete servicio;
+			cout << "Servicio eliminado con exito. \n";
+			menuServiciosDisponibles();
+		}
+		servicios.next();
+	}
+	cout << "Servicio no encontrado. \n";
+	menuServiciosDisponibles();
+	
+}
 
+void eliminarServiciosString(string servicio) {
+	servicios.goToStart();
+	for (int i = 0; i < servicios.getSize(); i++) {
+		
+			Servicio* servicioTemp = servicios.getElement();
+			if (servicio == servicioTemp->getArea()) {
+			servicios.remove();
+			delete servicioTemp;
+			return;
+		     }
+		servicios.next();
+	}
+	return;
+	
+
+}
+
+void reordenar(int servicio, int nuevaPosicion) {
+		if (servicio < 0 || nuevaPosicion < 0 || servicio >= servicios.getSize() || nuevaPosicion >= servicios.getSize()) {
+			cout << "Posicion no valida. \n";
+			menuServiciosDisponibles();
+		}
+		servicios.goToPos(servicio);
+		Servicio* servicioTemp = servicios.getElement();
+		servicios.remove(); 
+		servicios.goToPos(nuevaPosicion);
+		servicios.insert(servicioTemp);
+		
+
+	cout << "Servicio reordenado con exito. \n";
+	menuServiciosDisponibles();
+}
 
 
 static int consecutivoGlobal = 100;

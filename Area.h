@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <queue>
+#include <iostream>
 #include "Ventanilla.h"
 #include "ArrayList.h"
 #include "LinkedPriorityQueue.h"
