@@ -20,6 +20,7 @@ private:
     string codigo;
     ArrayList<Ventanilla> ventanillas;
     int cantidadVentanillas;
+    int cantidadTiquetes = 0;
     LinkedPriorityQueue<Tiquete> tiquetes;
 
 public: 
@@ -50,15 +51,6 @@ public:
 			
 		}
 	}
-
-    /*
-    //Constructor de copia
-    Area(const Area& other)
-        : descripcion(other.descripcion), codigo(other.codigo), cantidadVentanillas(other.cantidadVentanillas), ventanillas(other.ventanillas), tiquetes(other.tiquetes)
-    {}
-
-
-    */
     
 
     void setVentanillas(int nuevaCantidadVentanillas)
@@ -91,17 +83,50 @@ public:
             cout <<"llega al while y crea el objeto"<<endl;
 			ventanillas.insert(ventanilla);
 			cantidadVentanillas++;
+            
 		}
     }
+
+    void agregarTiquete(Tiquete tiquete) {
+        int prioridad = tiquete.getPrioridad();
+		tiquetes.insert(tiquete, prioridad);
+        cantidadTiquetes++;
+	}
+
+
 
     void DeleteTodo (){
 		ventanillas.clear();
 		tiquetes.clear();
 	}
 
+    Tiquete atenderTiquete() {
+        if (tiquetes.isEmpty()) {
+			cout << "No hay tiquetes en la cola" << endl;
+			return;
+		}
+        Tiquete tiquete = tiquetes.removeMin();
+        return tiquete;
+
+		
+	}
+
+    void agregarAventanillas(int ventanilla, Tiquete tiquete) {
+        ventanillas.goToPos(ventanilla);
+		Ventanilla ventanillaActual = ventanillas.getElement();
+		ventanillaActual.setTiqueteActual(tiquete);
+		ventanillas.remove();
+		ventanillas.insert(ventanillaActual);
+		
+    }
+
+
+
 
     void print(){
 		cout << "Area: " << descripcion << ",  Codigo: " << codigo << ", Cantidad de Ventanillas: " << cantidadVentanillas << " \n";
+        cout << "Tiquetes: " << endl;
+        tiquetes.print();
 	}
 
     //Getters y Setters
@@ -109,6 +134,14 @@ public:
     {
         return descripcion;
     }
+
+    string getCodigo() const
+    {
+		return codigo;
+	}
+
+
+
 
     //Para poder imprimir area
     friend std::ostream& operator<<(std::ostream& os, const Area& area) {

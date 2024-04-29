@@ -1,7 +1,9 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "chrono"
+#include <chrono>
+#include <sstream>
+#include <iomanip>
 
 using std::chrono::system_clock;
 using std::string;
@@ -35,6 +37,31 @@ public:
 	{
 		return codigo;
 	}
+
+	int getPrioridad() const
+	{
+		return prioridad;
+	}
+
+	void print() const
+	{
+		std::cout << "Codigo: " << codigo << ", Prioridad: " << prioridad << std::endl;
+	}
+
+	void printConHora() const
+	{
+		auto tp = std::chrono::system_clock::to_time_t(horaDeSolicitud);
+		std::tm bt;
+		localtime_s(&bt, &tp);
+		std::ostringstream oss;
+
+		oss << std::put_time(&bt, "%H:%M:%S");
+
+		std::cout << "Codigo: " << codigo << ", Prioridad: " << prioridad << ", Hora de solicitud: " << oss.str() << std::endl;
+	}
+
+
+
 
 	friend std::ostream& operator<<(std::ostream& os, const Tiquete& tiquete)
 	{

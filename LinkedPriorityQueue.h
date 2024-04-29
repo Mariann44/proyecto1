@@ -97,5 +97,16 @@ public:
 		}
 	}
 
+	void printSinIndice() {
+		for (int i = 0; i < priorities; i++) {
+			if (!queues[i].isEmpty()) {
+				queues[i].print();
+			}
+		}
+	}
+
+	
+
+
 };
 

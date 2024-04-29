@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include "LinkedPriorityQueue.h"
+#include "LinkedQueue.h"
 #include "ArrayList.h"
 #include "Usuario.h"
 #include "Area.h"
@@ -16,9 +17,11 @@ using std::string;
 LinkedPriorityQueue<Usuario> usuarios(10); //pa saber los tipos de usuario
 ArrayList<Area*> areas;
 ArrayList<Servicio*> servicios;
+ArrayList<Usuario*> usuariosArray;
 
 
 //Resulta que c++ toma en cuenta el orden de las funciones, por lo que si se llama una función que no ha sido declarada, se debe declarar antes de llamarla
+static int consecutivoGlobal = 100;
 void menuPrincipal();
 void menuTiposDeUsuario();
 void agregarTipoUsuario(string nombre, int prioridad);
@@ -34,6 +37,18 @@ void agregarServicios(string descripcion, int prioridad, string area);
 void eliminarServicios(int servicio);
 void eliminarServiciosString(string servicio);
 void reordenar(int servicio, int nuevaPosicion);
+void Tiquetes();
+int prioridadUsario(int usuario);
+int prioridadServicio(int servicio);
+string buscarAreaPorServicio(int servicio);
+Tiquete crearTiquete(int usuario, int servicio);
+void eliminarUsuarioPorPrioridad(int prioridad);
+void printArrayUsuarios(); // pa imprimir sin la prioridad xd
+void datosDePrueba();
+void atender();
+void atenderAux(string area, int ventanilla);
+
+
 
 
 // Gabriel: Este método convierte un string a un int, si el string no es un número, se manejan las excepciones. por eso cuando se llama para convirtir se llama como stoi(string) xd
@@ -70,6 +85,7 @@ void menuPrincipal() {
 	cout << "4. Administracion: \n";
 	cout << "5. Estadisticas del Sistema: \n";
 	cout << "6. Salir: \n";
+	cout << "7. Establecer Datos de Prueba: \n";
 
 	string opcion;
 	getline(cin, opcion);
@@ -78,7 +94,7 @@ void menuPrincipal() {
 		cout << "Estado de Colas: \n";
 	}
 	else if (opcion == "2") {
-		cout << "Tiquetes: \n";
+		Tiquetes();
 	}
 	else if (opcion == "3") {
 		cout << "Atender: \n";
@@ -91,6 +107,11 @@ void menuPrincipal() {
 	}
 	else if (opcion == "6") {
 		cout << "Salir: \n";
+	}
+	else if (opcion == "7") {
+		cout << "Establecer Datos de Prueba: \n";
+		datosDePrueba();
+
 	}
 	else {
 		cout << "Opcion no valida. \n";
@@ -149,6 +170,7 @@ void menuTiposDeUsuario() {
 	}
 	else if (opcion == "2") {
 		eliminarTipoUsuario();
+		
 
 
 	}
@@ -167,6 +189,10 @@ void menuTiposDeUsuario() {
 void agregarTipoUsuario(string nombre, int prioridad) {
 	Usuario usuario = Usuario(nombre, prioridad); //***
 	usuarios.insert(usuario, prioridad);
+	
+	Usuario* usuarioTemp = new Usuario(nombre, prioridad);
+	usuariosArray.append(usuarioTemp);
+
 	cout << "Tipo de usuario agregado con exito. \n";
 	menuTiposDeUsuario();
 	
@@ -194,6 +220,7 @@ void eliminarTipoUsuario() {
 
         if (StringtoInt(prioridad) >= 0 && StringtoInt(prioridad) < usuarios.getSize()) {
             usuarios.removePriority(StringtoInt(prioridad));
+			eliminarUsuarioPorPrioridad(StringtoInt(prioridad));
             cout << "Tipo de usuario eliminado con exito. \n";
             break;
         }
@@ -204,6 +231,20 @@ void eliminarTipoUsuario() {
 
     menuTiposDeUsuario();
 }
+
+void eliminarUsuarioPorPrioridad(int prioridad) {
+	usuariosArray.goToStart();
+	for (int i = 0; i < usuariosArray.getSize(); i++) {
+		if (usuariosArray.getElement()->getPrioridad() == prioridad) {
+			usuariosArray.remove();
+			return;
+		}
+		usuariosArray.next();
+	}
+
+}
+
+
 
 
 void menuAreas() {
@@ -463,7 +504,171 @@ void reordenar(int servicio, int nuevaPosicion) {
 }
 
 
-static int consecutivoGlobal = 100;
+
+void Tiquetes() {
+	cout << "Menu Tiquetes: \n";
+	cout << "1. Solicitar Tiquete: \n";
+	cout << "2. Regresar: \n";
+	string opcion;
+	getline(cin, opcion);
+
+	if (opcion == "1") {
+		cout << "Observe los tipos de usuario disponibles: \n";
+		printArrayUsuarios();
+		cout << "Inserte el numero del tipo de usuario: \n";
+		string tipoUsuario;
+		getline(cin, tipoUsuario);
+		cout << "Observe los servicios disponibles: \n";
+		servicios.printPunteroConIndice();
+		cout << "Inserte el numero del servicio: \n";
+		string servicio;
+		getline(cin, servicio);
+
+		Tiquete tiquete = crearTiquete(StringtoInt(tipoUsuario), StringtoInt(servicio));
+
+		tiquete.printConHora();
+		Tiquetes(); 
+		
+	}
+	else if (opcion == "2") {
+		menuPrincipal();
+	}
+	else {
+		cout << "Opcion no valida. \n";
+		Tiquetes();
+	}
+}
+
+
+int prioridadServicio(int servicio) {
+	servicios.goToStart();
+	for (int i = 0; i < servicios.getSize(); i++) {
+		if (i == servicio) {
+			
+			servicios.getElement()->sumarTiquete();
+			return servicios.getElement()->getPrioridad();
+		}
+		servicios.next();
+	}
+}
+
+int prioridadUsario(int usuario) {
+	usuariosArray.goToPos(usuario);
+	usuariosArray.getElement()->sumarTiquete();
+	int prioridad = usuariosArray.getElement()->getPrioridad();
+	return prioridad;
+	
+}
+
+string buscarAreaPorServicio(int servicio) {
+	servicios.goToStart();
+	for (int i = 0; i < servicios.getSize(); i++) {
+		if (i == servicio) {
+			
+			return servicios.getElement()->getArea();
+		}
+		servicios.next();
+
+	}
+}
+
+Tiquete crearTiquete(int usuario, int servicio) {
+	int prioridadServicioNum = prioridadServicio(servicio);
+	int prioridadUsuario = prioridadUsario(usuario);
+	string areaCodigo = buscarArea(buscarAreaPorServicio(servicio))->getCodigo();
+	Tiquete tiqueteTemp = Tiquete(areaCodigo, prioridadUsuario, prioridadServicioNum, consecutivoGlobal);
+
+	buscarArea(buscarAreaPorServicio(servicio))->agregarTiquete(tiqueteTemp);
+	//buscarArea(buscarAreaPorServicio(servicio))->print(); pa ver si se agrega el tiquete
+
+	consecutivoGlobal++;
+	return tiqueteTemp;
+
+}
+
+void printArrayUsuarios() {
+	usuariosArray.goToStart();
+	for (int i = 0; i < usuariosArray.getSize(); i++) {
+		cout << i << ". ";
+		usuariosArray.getElement()->printSinPrioridad();
+		
+		usuariosArray.next();
+
+	}
+}
+
+void Atender() {
+	cout << "Menu Atender: \n";
+	cout << "1. Atender Tiquete: \n";
+	cout << "2. Regresar: \n";
+	string opcion;
+	getline(cin, opcion);
+
+	if (opcion == "1") {
+		cout << "Inserte el area que le corresponde: \n";
+		string area;
+		getline(cin, area);
+		cout << "Inserte el numero de ventanilla: \n";
+		string numeroVentanilla;
+		getline(cin, numeroVentanilla);
+		atenderAux(area, StringtoInt(numeroVentanilla));
+
+
+
+	}
+	else if (opcion == "2") {
+		menuPrincipal();
+	}
+	else {
+		cout << "Opcion no valida. \n";
+		Tiquetes();
+	}
+}
+
+
+
+
+
+
+
+void datosDePrueba() {
+	Usuario usuario1 = Usuario("Usuario1", 1);
+	Usuario usuario2 = Usuario("Usuario2", 2);
+	Usuario usuario3 = Usuario("Usuario3", 3);
+
+	usuarios.insert(usuario1, 1);
+	usuarios.insert(usuario2, 2);
+	usuarios.insert(usuario3, 3);
+
+
+	Usuario* usuarioTemp1 = new Usuario("Usuario1", 1);
+	Usuario* usuarioTemp2 = new Usuario("Usuario2", 2);
+	Usuario* usuarioTemp3 = new Usuario("Usuario3", 3);
+	usuariosArray.append(usuarioTemp1);
+	usuariosArray.append(usuarioTemp2);
+	usuariosArray.append(usuarioTemp3);
+
+
+	Area* area1 = new Area("Area1", "A1", 1);
+	Area* area2 = new Area("Area2", "A2", 2);
+	Area* area3 = new Area("Area3", "A3", 3);
+	areas.insert(area1);
+	areas.insert(area2);
+	areas.insert(area3);
+
+	Servicio* servicio1 = new Servicio("Servicio1", 1, "Area1");
+	Servicio* servicio2 = new Servicio("Servicio2", 2, "Area2");
+	Servicio* servicio3 = new Servicio("Servicio3", 3, "Area3");
+	
+	servicios.append(servicio1);
+	servicios.append(servicio2);
+	servicios.append(servicio3);
+	menuPrincipal();	
+}
+
+void atenderAux(string area, int ventanilla) {
+	buscarArea(area)->agregarAventanillas(ventanilla, buscarArea(area)->atenderTiquete());
+}
 
 int main()
 {

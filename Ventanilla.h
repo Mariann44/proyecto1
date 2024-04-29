@@ -9,8 +9,9 @@ class Ventanilla
 {
 private:
 	string nombre;
-	Tiquete* tiqueteActual;
-	Tiquete* tiqueteAnterior;
+	Tiquete tiqueteActual;
+	Tiquete tiqueteAnterior;
+	int cantidadTiquetesAtendidos = 0;
 	bool ocupada;
 
 public:
@@ -19,22 +20,21 @@ public:
 	{
 		nombre = codigoArea + std::to_string(consecutivo + 1);
 		ocupada = false;
-		tiqueteActual = nullptr;
-		tiqueteAnterior = nullptr;
+		tiqueteActual = Tiquete();
+		tiqueteAnterior = Tiquete();
 	}
 
 	Ventanilla()
 	{
 		nombre = "";
 		ocupada = false;
-		tiqueteActual = nullptr;
-		tiqueteAnterior = nullptr;
+		tiqueteActual = Tiquete();
+		tiqueteAnterior = Tiquete();
 	}
 
 	~Ventanilla()
 	{
-		delete tiqueteActual;
-		delete tiqueteAnterior;
+
 	}
 
 	string getNombre() const
@@ -42,7 +42,7 @@ public:
 		return nombre;
 	}
 
-	Tiquete* getTiqueteActual() const
+	Tiquete getTiqueteActual() const
 	{
 		return tiqueteActual;
 	}
@@ -50,13 +50,12 @@ public:
 
 	void print() {
 		cout << "Ventanilla: " << nombre << ", Ocupada: " << (ocupada ? "Sí" : "No") << endl;
-		if (tiqueteActual != nullptr) {
-			cout << "Tiquete actual: " << tiqueteActual->getCodigo() << endl;
-		}
-		else {
-			cout << "Tiquete actual: No hay tiquete actual" << endl;
-		}
+		cout << "Tiquete actual: " << tiqueteActual.getCodigo() << endl;
+	}
 
+	void setTiqueteActual(Tiquete tiquete)
+	{
+		tiqueteActual = tiquete;
 	}
 
 	friend std::ostream& operator<<(std::ostream& os, const Ventanilla& ventanilla){

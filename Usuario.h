@@ -9,6 +9,7 @@ class Usuario
 private:
 	string descripcion;
 	int prioridad;
+	int cantidadTiquete = 0;
 
 public:
 	Usuario(string descripcionUsuario, int prioridadUsuario){
@@ -22,7 +23,10 @@ public:
 		prioridad = 0;
 	}
 
+	void sumarTiquete() {
+		cantidadTiquete++;
 
+	}
 
 
 
@@ -41,9 +45,16 @@ public:
 		prioridad = prioridadUsuario;
 	}
 
+	void printSinPrioridad() const
+	{
+		std::cout << "Descripcion: " << descripcion << std::endl;
+	}
+
+
+
 	// Sobrecarga del operador <<
 	friend std::ostream& operator<<(std::ostream& os, const Usuario& usuario) {
-		os << "Descripcion: " << usuario.descripcion << ", Prioridad: " << usuario.prioridad;
+		os << "Descripcion: " << usuario.descripcion << " Prioridad: " << usuario.prioridad;
 		return os;
 	}
 

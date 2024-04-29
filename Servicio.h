@@ -14,6 +14,7 @@ private:
 	string descripcion;
 	int prioridad;
 	string Area;
+	int cantidadServicios = 0;
 
 
 public:
@@ -25,6 +26,10 @@ public:
 	}
 	~Servicio()
 	{
+	}
+
+	void sumarTiquete() {
+		cantidadServicios++;
 	}
 
 
@@ -39,5 +44,12 @@ public:
 	string getArea() {
 		return Area;
 	}
+
+	int getPrioridad() const {
+		return prioridad;
+	}
+
+
+
 };
 
