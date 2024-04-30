@@ -48,7 +48,13 @@ public:
 	int getPrioridad() const {
 		return prioridad;
 	}
+	int getCantidadServicios() const {
+		return cantidadServicios;
+	}
 
+	string getDescripcion() const {
+		return descripcion;
+	}
 
 
 };

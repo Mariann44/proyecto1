@@ -52,6 +52,16 @@ public:
 		}
 	}
     
+    void printVentanillas() {
+        ventanillas.goToStart();
+        for (int i = 0; i < cantidadVentanillas; i++)
+        {
+			cout << i << ". ";
+            ventanillas.getElement().getNombre();
+			cout << endl;
+			ventanillas.next();
+		}
+    }
 
     void setVentanillas(int nuevaCantidadVentanillas)
 	{
@@ -103,21 +113,31 @@ public:
     Tiquete atenderTiquete() {
         if (tiquetes.isEmpty()) {
 			cout << "No hay tiquetes en la cola" << endl;
-			return;
+			return Tiquete();
 		}
         Tiquete tiquete = tiquetes.removeMin();
+        tiquete.setHoraDeAtencion();
         return tiquete;
 
 		
 	}
 
     void agregarAventanillas(int ventanilla, Tiquete tiquete) {
-        ventanillas.goToPos(ventanilla);
-		Ventanilla ventanillaActual = ventanillas.getElement();
-		ventanillaActual.setTiqueteActual(tiquete);
-		ventanillas.remove();
-		ventanillas.insert(ventanillaActual);
-		
+        if (ventanilla >= cantidadVentanillas) {
+            cout << "No existe la ventanilla" << endl;
+            return;
+        }
+        if (tiquete.getCodigo() == "") {
+			return;
+		}
+        else {
+            ventanillas.goToPos(ventanilla);
+            Ventanilla ventanillaActual = ventanillas.getElement();
+            ventanillaActual.setTiqueteActual(tiquete);
+            ventanillaActual.cantidadTiquetesAtendidosIncrementar();
+            ventanillas.remove();
+            ventanillas.insert(ventanillaActual);
+        }
     }
 
 
@@ -128,6 +148,20 @@ public:
         cout << "Tiquetes: " << endl;
         tiquetes.print();
 	}
+
+    void printEstadoCola() {
+        cout << "Area: " << descripcion <<  ", Cantidad de Ventanillas: " << cantidadVentanillas << " \n";
+        cout << "Tiquetes en cola: " << endl;
+        tiquetes.print();
+        ventanillas.goToStart();
+        for (int i = 0; i < cantidadVentanillas; i++)
+        {
+            ventanillas.getElement().print();
+			cout << endl;
+			ventanillas.next();
+		}
+    }
+
 
     //Getters y Setters
     string getDescripcion() const
@@ -140,7 +174,11 @@ public:
 		return codigo;
 	}
 
-
+    int getCantidadTiquetes() const
+    {
+		return cantidadTiquetes;
+	}
+	
 
 
     //Para poder imprimir area

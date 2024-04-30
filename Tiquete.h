@@ -60,6 +60,10 @@ public:
 		std::cout << "Codigo: " << codigo << ", Prioridad: " << prioridad << ", Hora de solicitud: " << oss.str() << std::endl;
 	}
 
+	void setHoraDeAtencion()
+	{
+		horaDeAtencion = system_clock::now();
+	}
 
 
 

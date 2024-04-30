@@ -45,8 +45,12 @@ Tiquete crearTiquete(int usuario, int servicio);
 void eliminarUsuarioPorPrioridad(int prioridad);
 void printArrayUsuarios(); // pa imprimir sin la prioridad xd
 void datosDePrueba();
-void atender();
+void Atender();
 void atenderAux(string area, int ventanilla);
+void estadoColas();
+void consultaEstadisticas();
+
+
 
 
 
@@ -92,18 +96,23 @@ void menuPrincipal() {
 
 	if (opcion == "1") {
 		cout << "Estado de Colas: \n";
+		estadoColas();
+		cout << "Presione cualquier tecla para regresar \n";
+		getline(cin, opcion);
+		menuPrincipal();
+
 	}
 	else if (opcion == "2") {
 		Tiquetes();
 	}
 	else if (opcion == "3") {
-		cout << "Atender: \n";
+		Atender();
 	}
 	else if (opcion == "4") {
 		menuAdministracion();
 	}
 	else if (opcion == "5") {
-		cout << "Estadisticas del Sistema: \n";
+		consultaEstadisticas();
 	}
 	else if (opcion == "6") {
 		cout << "Salir: \n";
@@ -545,7 +554,7 @@ int prioridadServicio(int servicio) {
 	for (int i = 0; i < servicios.getSize(); i++) {
 		if (i == servicio) {
 			
-			servicios.getElement()->sumarTiquete();
+			servicios.getElement()->sumarTiquete(); //sumar tiquete al servicio
 			return servicios.getElement()->getPrioridad();
 		}
 		servicios.next();
@@ -554,7 +563,7 @@ int prioridadServicio(int servicio) {
 
 int prioridadUsario(int usuario) {
 	usuariosArray.goToPos(usuario);
-	usuariosArray.getElement()->sumarTiquete();
+	usuariosArray.getElement()->sumarTiquete(); //sumar tiquete al usuario
 	int prioridad = usuariosArray.getElement()->getPrioridad();
 	return prioridad;
 	
@@ -597,6 +606,16 @@ void printArrayUsuarios() {
 	}
 }
 
+
+void printAreas() {
+	areas.goToStart();
+	for (int i = 0; i < areas.getSize(); i++) {
+		cout << areas.getElement()->getDescripcion() << " \n";
+		areas.next();
+
+	}
+}
+
 void Atender() {
 	cout << "Menu Atender: \n";
 	cout << "1. Atender Tiquete: \n";
@@ -605,13 +624,16 @@ void Atender() {
 	getline(cin, opcion);
 
 	if (opcion == "1") {
-		cout << "Inserte el area que le corresponde: \n";
+		printAreas();
+		cout << "Inserte el nombre del area que le corresponde: \n";
 		string area;
 		getline(cin, area);
+	    buscarArea(area)->printVentanillas();
 		cout << "Inserte el numero de ventanilla: \n";
 		string numeroVentanilla;
 		getline(cin, numeroVentanilla);
 		atenderAux(area, StringtoInt(numeroVentanilla));
+		Atender();
 
 
 
@@ -667,8 +689,53 @@ void datosDePrueba() {
 }
 
 void atenderAux(string area, int ventanilla) {
+	if (buscarArea(area) == nullptr) {
+		cout << "Area no encontrada. \n";
+		Atender();
+		return;
+	}
 	buscarArea(area)->agregarAventanillas(ventanilla, buscarArea(area)->atenderTiquete());
 }
+
+void estadoColas() {
+	areas.goToStart();
+	for (int i = 0; i < areas.getSize(); i++) {
+		areas.getElement()->printEstadoCola();
+		cout << "\n";
+		areas.next();
+	}
+	menuPrincipal();
+}
+
+void consultaEstadisticas() {
+	cout << "Estadisticas del Sistema: \n";
+	cout << "Cantidad tiquetes dispensandos por area: \n";
+	areas.goToStart();
+	for (int i = 0; i < areas.getSize(); i++) {
+		cout << "Area: " << areas.getElement()->getDescripcion() << " Cantidad de tiquetes dispensados: " << areas.getElement()->getCantidadTiquetes() << " \n";
+		areas.next();
+	}
+	cout << "Cantidad de tiquetes dispensados por servicio: \n";
+	servicios.goToStart();
+	for (int i = 0; i < servicios.getSize(); i++) {
+		cout << "Servicio: " << servicios.getElement()->getDescripcion() << " Cantidad de tiquetes dispensados: " << servicios.getElement()->getCantidadServicios() << " \n";
+		servicios.next();
+	}
+	cout << "Cantidad de tiquetes dispensados por usuario: \n";
+	usuariosArray.goToStart();
+	for (int i = 0; i < usuariosArray.getSize(); i++) {
+		cout << "Usuario: " << usuariosArray.getElement()->getDescripcion() << " Cantidad de tiquetes dispensados: " << usuariosArray.getElement()->getCantidadTiquete() << " \n";
+		usuariosArray.next();
+	}
+
+	
+	cout << "Presione cualquier tecla para regresar \n";
+	string opcion;
+	getline(cin, opcion);
+	menuPrincipal();
+}
+
+
 
 int main()
 {

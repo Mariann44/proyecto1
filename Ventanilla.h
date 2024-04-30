@@ -47,15 +47,31 @@ public:
 		return tiqueteActual;
 	}
 
-
-	void print() {
-		cout << "Ventanilla: " << nombre << ", Ocupada: " << (ocupada ? "Sí" : "No") << endl;
-		cout << "Tiquete actual: " << tiqueteActual.getCodigo() << endl;
+	int getCantidadTiquetesAtendidos() const
+	{
+		return cantidadTiquetesAtendidos;
 	}
 
 	void setTiqueteActual(Tiquete tiquete)
 	{
+		tiqueteAnterior = tiqueteActual;
 		tiqueteActual = tiquete;
+
+	}
+
+	void print() {
+		cout << "Ventanilla: " << nombre <<  endl;
+		if (tiqueteActual.getCodigo() != "")
+		cout << "Tiquete actual: " << tiqueteActual.getCodigo() << endl;
+		else cout << "Tiquete actual: No hay tiquete actual" << endl;
+	}
+
+	
+
+
+	void cantidadTiquetesAtendidosIncrementar()
+	{
+		cantidadTiquetesAtendidos++;
 	}
 
 	friend std::ostream& operator<<(std::ostream& os, const Ventanilla& ventanilla){

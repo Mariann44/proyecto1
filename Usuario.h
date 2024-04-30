@@ -44,6 +44,9 @@ public:
 	void setPrioridad(int prioridadUsuario) {
 		prioridad = prioridadUsuario;
 	}
+	int getCantidadTiquete() {
+		return cantidadTiquete;
+	}
 
 	void printSinPrioridad() const
 	{
