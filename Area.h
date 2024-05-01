@@ -22,6 +22,7 @@ private:
     int cantidadVentanillas;
     int cantidadTiquetes = 0;
     LinkedPriorityQueue<Tiquete> tiquetes;
+    int tiempoEspera = 0;
 
 public: 
     Area(string descripcionArea, string codigoArea, int cantidadVentanillasArea)
@@ -57,7 +58,7 @@ public:
         for (int i = 0; i < cantidadVentanillas; i++)
         {
 			cout << i << ". ";
-            ventanillas.getElement().getNombre();
+            cout << ventanillas.getElement().getNombre();
 			cout << endl;
 			ventanillas.next();
 		}
@@ -90,7 +91,7 @@ public:
     void agregarVentanilla(int nuevaCantidadVentanillas) {
         while(cantidadVentanillas < nuevaCantidadVentanillas){
 			Ventanilla ventanilla = Ventanilla(codigo, cantidadVentanillas);
-            cout <<"llega al while y crea el objeto"<<endl;
+            
 			ventanillas.insert(ventanilla);
 			cantidadVentanillas++;
             
@@ -160,6 +161,19 @@ public:
 			cout << endl;
 			ventanillas.next();
 		}
+    }
+
+    void limpiarCola() {
+        tiquetes.clear();
+        cantidadTiquetes = 0;
+        tiempoEspera = 0;
+
+        ventanillas.goToStart();
+        for (int i = 0; i < cantidadVentanillas; i++)
+        {
+            ventanillas.getElement().limpiarVentanilla();
+            ventanillas.next();
+        }
     }
 
 

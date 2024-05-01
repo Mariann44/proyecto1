@@ -28,7 +28,9 @@ public:
 
 	}
 
-
+	void reset() {
+		cantidadTiquete = 0;
+	}
 
 
 //Getters y Setters

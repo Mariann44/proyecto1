@@ -49,6 +49,7 @@ void Atender();
 void atenderAux(string area, int ventanilla);
 void estadoColas();
 void consultaEstadisticas();
+void limpieceLaCola();
 
 
 
@@ -148,7 +149,7 @@ void menuAdministracion() {
 		menuServiciosDisponibles();
 	}
 	else if (opcion == "4") {
-		//Método para limpiar colas limpiece la cola
+		limpieceLaCola();
 	}
 	else if (opcion == "5") {
 		menuPrincipal();
@@ -734,6 +735,31 @@ void consultaEstadisticas() {
 	getline(cin, opcion);
 	menuPrincipal();
 }
+
+
+void limpieceLaCola() {
+	areas.goToStart();
+	for (int i = 0; i < areas.getSize(); i++) {
+		areas.getElement()->limpiarCola();
+		areas.next();
+	}
+	servicios.goToStart();
+	for (int i = 0; i < servicios.getSize(); i++) {
+		servicios.getElement()->reset();
+		servicios.next();
+	}
+	usuariosArray.goToStart();
+	for (int i = 0; i < usuariosArray.getSize(); i++) {
+		usuariosArray.getElement()->reset();
+		usuariosArray.next();
+	}
+
+	consecutivoGlobal = 100;
+
+	cout << "Colas limpiadas con exito. \n";
+	menuAdministracion();
+}
+
 
 
 

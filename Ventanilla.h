@@ -66,6 +66,12 @@ public:
 		else cout << "Tiquete actual: No hay tiquete actual" << endl;
 	}
 
+	void limpiarVentanilla()
+	{
+		tiqueteAnterior = Tiquete();
+		tiqueteActual = Tiquete();
+		cantidadTiquetesAtendidos = 0;
+	}
 	
 
 

@@ -32,6 +32,9 @@ public:
 		cantidadServicios++;
 	}
 
+	void reset() {
+		cantidadServicios = 0;
+	}
 
 
 	//Metodo para imprimir los datos del servicio
