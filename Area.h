@@ -1,3 +1,13 @@
+/*Proyecto realizado por : Valeria Marín Barquero y Gabriel Arguedas Soloano
+*
+*
+*
+*
+*
+*
+*
+*
+*/
 #pragma once
 #include <string>
 #include <vector>
@@ -22,7 +32,8 @@ private:
     int cantidadVentanillas;
     int cantidadTiquetes = 0;
     LinkedPriorityQueue<Tiquete> tiquetes;
-    int tiempoEspera = 0;
+    std::chrono::duration<double> tiempoEspera{};
+
 
 public: 
     Area(string descripcionArea, string codigoArea, int cantidadVentanillasArea)
@@ -49,7 +60,6 @@ public:
             cout<<endl;
             ventanillas.next();
 
-			
 		}
 	}
     
@@ -123,6 +133,28 @@ public:
 		
 	}
 
+    void setTiempoEspera() {
+		ventanillas.goToStart();
+		for (int i = 0; i < cantidadVentanillas; i++)
+		{
+			Ventanilla ventanilla = ventanillas.getElement();
+			tiempoEspera += ventanilla.getTiempoEsperaVentanilla();
+			ventanillas.next();
+		}
+	}
+
+    void tiempoEsperaPromedio() {
+		if (cantidadTiquetes == 0) {
+			cout << "No hay tiquetes en la cola" << endl;
+			return;
+		}
+		setTiempoEspera();
+		cout << "Tiempo de espera promedio: " << tiempoEspera.count() / cantidadTiquetes << " segundos" << endl;
+	}
+
+
+
+
     void agregarAventanillas(int ventanilla, Tiquete tiquete) {
         if (ventanilla >= cantidadVentanillas) {
             cout << "No existe la ventanilla" << endl;
@@ -135,13 +167,12 @@ public:
             ventanillas.goToPos(ventanilla);
             Ventanilla ventanillaActual = ventanillas.getElement();
             ventanillaActual.setTiqueteActual(tiquete);
+            ventanillaActual.seTtiempoEspera();
             ventanillaActual.cantidadTiquetesAtendidosIncrementar();
             ventanillas.remove();
             ventanillas.insert(ventanillaActual);
         }
     }
-
-
 
 
     void print(){
@@ -166,12 +197,16 @@ public:
     void limpiarCola() {
         tiquetes.clear();
         cantidadTiquetes = 0;
-        tiempoEspera = 0;
+        tiempoEspera = std::chrono::duration<double>{}; // tiempoEspera a 0
 
         ventanillas.goToStart();
         for (int i = 0; i < cantidadVentanillas; i++)
         {
-            ventanillas.getElement().limpiarVentanilla();
+            Ventanilla ventanillaTemp = ventanillas.getElement();
+            ventanillaTemp.limpiarVentanilla();
+            ventanillas.remove();
+            ventanillas.insert(ventanillaTemp);
+
             ventanillas.next();
         }
     }
@@ -202,8 +237,5 @@ public:
 
 
     }
-    
-    
 
-    
 };

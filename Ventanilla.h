@@ -1,3 +1,13 @@
+/*Proyecto realizado por : Gabriel Arguedas Solano y Valeria Marín Barquero
+*
+*
+*
+*
+*
+*
+*
+*
+*/
 #pragma once
 #include <string>
 #include "Tiquete.h"
@@ -13,6 +23,7 @@ private:
 	Tiquete tiqueteAnterior;
 	int cantidadTiquetesAtendidos = 0;
 	bool ocupada;
+	std::chrono::duration<double> tiempoEsperaVentanilla{};
 
 public:
 	
@@ -36,6 +47,16 @@ public:
 	{
 
 	}
+
+	void seTtiempoEspera() {
+		tiempoEsperaVentanilla = tiqueteActual.tiempoEspera();
+
+	}
+
+	std::chrono::duration<double> getTiempoEsperaVentanilla() {
+		return tiempoEsperaVentanilla;
+	}
+
 
 	string getNombre() const
 	{
@@ -61,8 +82,9 @@ public:
 
 	void print() {
 		cout << "Ventanilla: " << nombre <<  endl;
-		if (tiqueteActual.getCodigo() != "")
-		cout << "Tiquete actual: " << tiqueteActual.getCodigo() << endl;
+		if (tiqueteActual.getCodigo() != "") {
+			cout << "Tiquete actual: " << tiqueteActual.getCodigo() << endl;
+		}
 		else cout << "Tiquete actual: No hay tiquete actual" << endl;
 	}
 
@@ -70,6 +92,8 @@ public:
 	{
 		tiqueteAnterior = Tiquete();
 		tiqueteActual = Tiquete();
+		cout << "Ventanilla LIMPIADA" << endl;
+		cout << "Tiquete: " << tiqueteActual.getCodigo() << endl;
 		cantidadTiquetesAtendidos = 0;
 	}
 	

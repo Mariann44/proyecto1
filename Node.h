@@ -1,3 +1,13 @@
+/*Proyecto realizado por : Valeria Marín Barquero y Gabriel Arguedas Soloano
+*
+*Clase elaborada durante lecciones de Estructuras de Datos por el profesor Mauricio Áviles
+*
+*
+*
+*
+*
+*
+*/
 #pragma once
 
 template <typename E>

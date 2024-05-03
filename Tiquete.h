@@ -1,3 +1,15 @@
+/*Proyecto realizado por : Valeria Marín Barquero y Gabriel Arguedas Soloano
+*
+*
+*
+*
+*
+*
+*
+*
+*/
+
+
 #pragma once
 #include <iostream>
 #include <string>
@@ -31,6 +43,12 @@ public:
 		codigo = "";
 		horaDeSolicitud = system_clock::now();
 		prioridad = 0;
+	}
+
+
+	std::chrono::duration<double> tiempoEspera() {
+		std::chrono::duration<double> tiempo = horaDeAtencion - horaDeSolicitud;
+		return tiempo;
 	}
 
 	string getCodigo() const

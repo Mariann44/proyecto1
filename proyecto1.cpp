@@ -1,5 +1,7 @@
-// Proyecto realizado por: Valeria Marín Barquero y Gabriel Arguedas Soloano
-//
+/*Proyecto realizado por: Gabriel Arguedas Solano  
+*
+*
+*/
 #include <string>
 #include <iostream>
 #include "LinkedPriorityQueue.h"
@@ -22,6 +24,7 @@ ArrayList<Usuario*> usuariosArray;
 
 //Resulta que c++ toma en cuenta el orden de las funciones, por lo que si se llama una función que no ha sido declarada, se debe declarar antes de llamarla
 static int consecutivoGlobal = 100;
+
 void menuPrincipal();
 void menuTiposDeUsuario();
 void agregarTipoUsuario(string nombre, int prioridad);
@@ -457,10 +460,17 @@ void menuServiciosDisponibles() {
 
 
 void agregarServicios(string descripcion, int prioridad, string area) {
-	Servicio* servicio = new Servicio(descripcion, prioridad, area);
-	servicios.insert(servicio);
-	cout << "Servicio agregado con exito. \n";
-	menuServiciosDisponibles();
+	if(buscarArea(area) == nullptr) {
+		cout << "Area asociada al servicio no encontrada. \n";
+		menuServiciosDisponibles();
+		return;
+	}
+	else {
+		Servicio* servicio = new Servicio(descripcion, prioridad, area);
+		servicios.insert(servicio);
+		cout << "Servicio agregado con exito. \n";
+		menuServiciosDisponibles();
+	}
 }
 
 void eliminarServicios(int servicio) {
@@ -714,6 +724,10 @@ void consultaEstadisticas() {
 	areas.goToStart();
 	for (int i = 0; i < areas.getSize(); i++) {
 		cout << "Area: " << areas.getElement()->getDescripcion() << " Cantidad de tiquetes dispensados: " << areas.getElement()->getCantidadTiquetes() << " \n";
+		cout << "Tiempo: ";
+		areas.getElement()->tiempoEsperaPromedio();
+
+
 		areas.next();
 	}
 	cout << "Cantidad de tiquetes dispensados por servicio: \n";

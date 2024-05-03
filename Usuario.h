@@ -1,3 +1,17 @@
+/*Proyecto realizado por : Valeria Marín Barquero y Gabriel Arguedas Soloano
+*
+*
+*
+*
+*
+*
+*
+*
+*/
+
+
+
+
 #pragma once
 #include <iostream>
 #include <string>
