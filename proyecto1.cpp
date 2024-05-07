@@ -1,9 +1,37 @@
-/*Proyecto realizado por: Gabriel Arguedas Solano  
+/*Proyecto realizado por: Gabriel Arguedas Solano y Mariann Marin Barquero
 *
 * Aquí estan implementados los menus y submenus con los que interactuará el usuario y administradores además de que aquí se hace uso de las clases, estrcutyras y sus metodos
 * 
 * funciones: 
-* menuPrincipal: 
+* menuPrincipal: Muestra el menu principal con las opciones de Estado de Colas, Tiquetes, Atender, Administracion, Estadisticas del Sistema y Salir
+* menuTiposDeUsuario: Muestra el menu de Tipos de Usuario con las opciones de Agregar, Eliminar y Regresar
+* agregarTipoUsuario: Agrega un tipo de usuario a la lista de tipos de usuario
+* eliminarTipoUsuario: Elimina un tipo de usuario de la lista de tipos de usuario
+* menuAdministracion: Muestra el menu de Administracion con las opciones de Tipos de Usuario, Areas, Servicios Disponibles, Limpiar Colas Estadisticas y Regresar
+* menuAreas: Muestra el menu de Areas con las opciones de Agregar, Eliminar, Modificar Ventanillas, Print de areas y Regresar
+* agregarArea: Agrega un area a la lista de areas
+* buscarArea: Busca un area en la lista de areas
+* modificarVentanillas: Modifica la cantidad de ventanillas de un area
+* borrarArea: Borra un area de la lista de areas
+* menuServiciosDisponibles: Muestra el menu de Servicios Disponibles con las opciones de Agregar, Eliminar, Reordenar, Regresar y Print de servicios
+* agregarServicios: Agrega un servicio a la lista de servicios
+* eliminarServicios: Elimina un servicio de la lista de servicios
+* eliminarServiciosString: Elimina un servicio de la lista de servicios por medio de un string
+* reordenar: Reordena la lista de servicios
+* Tiquetes: Muestra el menu de Tiquetes con las opciones de Solicitar Tiquete y Regresar
+* prioridadServicio: Obtiene la prioridad de un servicio
+* prioridadUsario: Obtiene la prioridad de un usuario
+* buscarAreaPorServicio: Busca un area por medio de un servicio
+* crearTiquete: Crea un tiquete
+* printArrayUsuarios: Imprime la lista de usuarios
+* printAreas: Imprime la lista de areas
+* Atender: Muestra el menu de Atender con las opciones de Atender Tiquete y Regresar
+* atenderAux: Atiende un tiquete
+* estadoColas: Muestra el estado de las colas
+* consultaEstadisticas: Muestra las estadisticas del sistema
+* limpieceLaCola: Limpia las colas
+* datosDePrueba: Establece los datos de prueba
+* main: Funcion principal
 */
 #include <string>
 #include <iostream>

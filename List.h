@@ -1,3 +1,11 @@
+/*Proyecto realizado por : Valeria Mar�n Barquero y Gabriel Arguedas Soloano
+*
+*Estructura elaborada durante lecciones de Estructuras de Datos por el profesor Mauricio �viles
+* 
+* Clase abstracta List que define las funciones b�sicas de una lista
+* Esta clase es gen�rica, por lo que se puede utilizar para cualquier tipo de dato.
+*/
+
 #pragma once
 
 template <typename E>
