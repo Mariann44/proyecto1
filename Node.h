@@ -3,7 +3,8 @@
 *Clase elaborada durante lecciones de Estructuras de Datos por el profesor Mauricio Áviles
 *
 *
-*
+* implementación de un nodo para una estructura de datos de tipo lista enlazada. 
+Esta clase es genérica, lo que significa que puede almacenar cualquier tipo de dato, especificado por el parámetro de plantilla E.
 *
 *
 *

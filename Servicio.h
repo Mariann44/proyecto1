@@ -1,9 +1,18 @@
 /*Proyecto realizado por : Valeria Marín Barquero y Gabriel Arguedas Soloano
 *
 *
+* implementación de un servicio en un sistema de colas. 
+* Esta clase contiene información sobre la descripción del servicio, su prioridad, el área a la que pertenece y la cantidad de servicios realizados.
 *
-*
-*
+*funciones:
+* -sumarTiquete: incrementa la cantidad de servicios realizados.
+* -reset: reinicia la cantidad de servicios realizados.
+* -getArea: retorna el área a la que pertenece el servicio.
+* -getPrioridad: retorna la prioridad del servicio.
+* -getCantidadServicios: retorna la cantidad de servicios realizados.
+* -getDescripcion: retorna la descripción del servicio.
+* -operator<<: sobrecarga del operador << para imprimir los datos del servicio.
+* 
 *
 *
 *

@@ -1,8 +1,23 @@
 /*Proyecto realizado por : Valeria Marín Barquero y Gabriel Arguedas Soloano
 *
 *
+*implementación de un área de servicio en un sistema de colas. 
+Esta clase utiliza una ArrayList para almacenar las ventanillas de servicio y una LinkedPriorityQueue para almacenar los tiquetes de los clientes.
 *
-*
+* funciones:
+* agregarVentanilla: agrega una ventanilla a la lista de ventanillas.
+* agregarTiquete: agrega un tiquete a la cola de tiquetes.
+* atenderTiquete: atiende un tiquete de la cola de tiquetes.
+* setTiempoEspera: calcula el tiempo de espera promedio de los tiquetes en la cola.
+* tiempoEsperaPromedio: imprime el tiempo de espera promedio de los tiquetes en la cola.
+* agregarAventanillas: agrega un tiquete a una ventanilla específica.
+* print: imprime la información del área.
+* printEstadoCola: imprime el estado de la cola de tiquetes y de las ventanillas.
+* limpiarCola: limpia la cola de tiquetes y las ventanillas.
+* getDescripcion: retorna la descripción del área.
+* getCodigo: retorna el código del área.
+* getCantidadTiquetes: retorna la cantidad de tiquetes en la cola.
+* operator<<: sobrecarga del operador << para imprimir el área.
 *
 *
 *

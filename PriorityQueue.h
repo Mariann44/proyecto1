@@ -2,7 +2,8 @@
 *
 *Estructura elaborada durante lecciones de Estructuras de Datos por el profesor Mauricio Áviles
 *
-*
+*clase abstracta que define la interfaz para una cola de prioridad. 
+*Esta clase es genérica, lo que significa que puede almacenar cualquier tipo de dato, especificado por el parámetro de plantilla E.
 *
 *
 *

@@ -1,7 +1,19 @@
 /*Proyecto realizado por : Valeria Marín Barquero y Gabriel Arguedas Soloano
 *
-*
-*
+* implementación de un usuario en un colas. 
+* Esta clase contiene información sobre la descripción del usuario, su prioridad y la cantidad de tiquetes que ha obtenido
+* 
+* Funciones:
+* sumarTiquete: incrementa la cantidad de tiquetes que tiene el usuario
+* reset: reinicia la cantidad de tiquetes a 0
+* getDescripcion: retorna la descripción del usuario
+* getPrioridad: retorna la prioridad del usuario
+* setDescripcion: modifica la descripción del usuario
+* setPrioridad: modifica la prioridad del usuario
+* getCantidadTiquete: retorna la cantidad de tiquetes que tiene el usuario
+* printSinPrioridad: imprime la descripción del usuario
+* Sobrecarga del operador <<: imprime la descripción y la prioridad del usuario
+* 
 *
 *
 *

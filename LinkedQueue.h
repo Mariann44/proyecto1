@@ -1,7 +1,18 @@
 /*Proyecto realizado por : Valeria Marín Barquero y Gabriel Arguedas Soloano
 *
 *Estructura elaborada durante lecciones de Estructuras de Datos por el profesor Mauricio Áviles
-*
+* 
+* 
+* implementación de una cola utilizando una lista enlazada. Hereda de la clase Queue y utiliza la clase Node para almacenar los elementos
+* Funciones:
+* enqueue(E element) : agrega un elemento al final de la cola
+* dequeue() : elimina el primer elemento de la cola
+* frontValue() : retorna el primer elemento de la cola
+* clear() : elimina todos los elementos de la cola
+* isEmpty() : retorna true si la cola está vacía, false si no
+* getSize() : retorna la cantidad de elementos en la cola
+* print() : imprime los elementos de la cola
+* 
 *
 *
 *

@@ -2,7 +2,17 @@
 *
 *Estructura elaborada durante lecciones de Estructuras de Datos por el profesor Mauricio Áviles
 *
-*
+*implementación de una cola de prioridad utilizando una lista enlazada. Hereda de la clase PriorityQueue y utiliza la clase LinkedQueue para almacenar los elementos.
+* funciones:
+* insert(E element, int priority) : inserta un elemento en la cola de prioridad con la prioridad dada.
+* min() : retorna el elemento con la menor prioridad.
+* removeMin() : remueve y retorna el elemento con la menor prioridad.
+* removePriority(int priority) : remueve todos los elementos con la prioridad dada.
+* clear() : remueve todos los elementos de la cola de prioridad.
+* getSize() : retorna la cantidad de elementos en la cola de prioridad.
+* getQueue() : retorna la lista de colas.
+* isEmpty() : retorna true si la cola de prioridad está vacía.
+* print() : imprime la cola de prioridad con los índices de las colas.
 *
 *
 *

@@ -1,6 +1,9 @@
 /*Proyecto realizado por: Gabriel Arguedas Solano  
 *
-*
+* Aquí estan implementados los menus y submenus con los que interactuará el usuario y administradores además de que aquí se hace uso de las clases, estrcutyras y sus metodos
+* 
+* funciones: 
+* menuPrincipal: 
 */
 #include <string>
 #include <iostream>

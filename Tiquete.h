@@ -1,8 +1,16 @@
 /*Proyecto realizado por : Valeria Marín Barquero y Gabriel Arguedas Soloano
 *
 *
-*
-*
+* implementación de un tiquete en un sistema de colas.
+* Esta clase contiene información sobre el código del tiquete, la hora de solicitud, la hora de atención y la prioridad del tiquete.
+* funciones:
+* -tiempoEspera: calcula el tiempo de espera del tiquete.
+* -getCodigo: retorna el código del tiquete.
+* -getPrioridad: retorna la prioridad del tiquete.
+* -print: imprime el código y la prioridad del tiquete.
+* -printConHora: imprime el código, la prioridad y la hora de solicitud del tiquete.
+* -setHoraDeAtencion: establece la hora de atención del tiquete.
+* -operator<<: sobrecarga del operador << para imprimir el código y la prioridad del tiquete.
 *
 *
 *
