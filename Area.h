@@ -84,10 +84,14 @@ public:
         {
 			cout << i << ". ";
             cout << ventanillas.getElement().getNombre();
+            cout << " Tiquetes dispensados: " << ventanillas.getElement().getcantidadTiquetesAtendidos();
 			cout << endl;
 			ventanillas.next();
 		}
     }
+
+
+
 
     void setVentanillas(int nuevaCantidadVentanillas)
 	{

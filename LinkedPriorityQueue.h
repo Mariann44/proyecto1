@@ -98,6 +98,11 @@ public:
 		return size;
 	}
 
+	int getPriorities() {
+		return priorities;
+	}
+
+
 	LinkedQueue<E>* getQueue() {
 		if (size==0)
 			throw runtime_error("Queues are empty");

@@ -49,6 +49,8 @@ public:
 		prioridad = 0;
 	}
 
+
+
 	void sumarTiquete() {
 		cantidadTiquete++;
 

@@ -262,7 +262,7 @@ void eliminarTipoUsuario() {
 			break;
 		}
 
-        if (StringtoInt(prioridad) >= 0 && StringtoInt(prioridad) < usuarios.getSize()) {
+        if (StringtoInt(prioridad) >= 0 && StringtoInt(prioridad) < usuarios.getPriorities()) {
             usuarios.removePriority(StringtoInt(prioridad));
 			eliminarUsuarioPorPrioridad(StringtoInt(prioridad));
             cout << "Tipo de usuario eliminado con exito. \n";
@@ -757,7 +757,8 @@ void consultaEstadisticas() {
 		cout << "Area: " << areas.getElement()->getDescripcion() << " Cantidad de tiquetes dispensados: " << areas.getElement()->getCantidadTiquetes() << " \n";
 		cout << "Tiempo: ";
 		areas.getElement()->tiempoEsperaPromedio();
-
+		cout << "\n Cantidad de tiquetes atendidos por ventanilla: \n";
+		areas.getElement()->printVentanillas();
 
 		areas.next();
 	}
@@ -805,7 +806,30 @@ void limpieceLaCola() {
 	menuAdministracion();
 }
 
+void deleteTodo() {
+	areas.goToStart();
+	for (int i = 0; i < areas.getSize(); i++) {
+		delete areas.getElement(); // Libera la memoria del objeto Area apuntado
+		areas.remove();
+		areas.next();
 
+	}
+	
+	usuariosArray.goToStart();
+	for (int i = 0; i < usuariosArray.getSize(); i++) {
+		delete usuariosArray.getElement(); // Libera la memoria del objeto Usuario apuntado
+		usuariosArray.remove();
+		usuariosArray.next();
+	}
+
+	servicios.goToStart();
+	for (int i = 0; i < servicios.getSize(); i++) {
+		delete servicios.getElement(); // Libera la memoria del objeto Servicio apuntado
+		servicios.remove();
+		servicios.next();
+	}
+
+}
 
 
 int main()
@@ -813,6 +837,8 @@ int main()
 
 
     menuPrincipal();
+	deleteTodo();
+	
 	return 0;
 
 

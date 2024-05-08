@@ -116,6 +116,11 @@ public:
 		cantidadTiquetesAtendidos++;
 	}
 
+	int getcantidadTiquetesAtendidos()
+	{
+		return cantidadTiquetesAtendidos;
+	}
+
 	friend std::ostream& operator<<(std::ostream& os, const Ventanilla& ventanilla){
 		os << "Nombre: " << ventanilla.nombre << ", Ocupada: " << (ventanilla.ocupada ? "Sí" : "No");
 		return os;
